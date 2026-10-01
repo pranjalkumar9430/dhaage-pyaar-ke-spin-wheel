@@ -55,11 +55,11 @@ const PRIZES = [
     message: "Show this screen at our stall to claim your 20% discount."
   },
   {
-    name: "25% OFF",
+    name: "30% OFF",
     probability: 10,
     winning: true,
     color: "#c9a84c",
-    message: "Show this screen at our stall to claim your 25% discount."
+    message: "Show this screen at our stall to claim your 30% discount."
   },
   {
     name: "FREE CROCHET KEYCHAIN",
