@@ -9,11 +9,11 @@ const BRAND = {
   // Supported formats: .png, .jpg, .webp, .svg
   logo: "assets/logo/logo.png",
   colors: {
-    primary:    "#8b5e4b",   // warm brown
-    secondary:  "#c9956a",   // muted terracotta
+    primary: "#8b5e4b",   // warm brown
+    secondary: "#c9956a",   // muted terracotta
     background: "#f7f0e6",   // warm cream / ivory
-    accent:     "#7a8c6e",   // muted sage/olive
-    text:       "#332821"    // deep warm brown
+    accent: "#7a8c6e",   // muted sage/olive
+    text: "#332821"    // deep warm brown
   }
 };
 
@@ -22,7 +22,7 @@ const BRAND = {
 // ===============================
 const GAME_SETTINGS = {
   allowOneSpinPerDevice: true,
-  testMode: true,
+  testMode: false,
   spinsBeforeStop: 6,
   animationDurationMs: 4800
 };
@@ -96,5 +96,5 @@ const PRIZES = [
 // ===============================
 const STORAGE_KEYS = {
   played: "crochetSpinPlayed",
-  result:  "crochetSpinResult"
+  result: "crochetSpinResult"
 };
