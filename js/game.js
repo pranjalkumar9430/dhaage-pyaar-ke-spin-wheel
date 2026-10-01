@@ -13,8 +13,19 @@ const els = {
   confetti: document.getElementById("confettiLayer"),
   previousResult: document.getElementById("previousResult"),
   previousPrize: document.getElementById("previousPrize"),
-  resultYouWon: document.getElementById("resultYouWon")
+  resultYouWon: document.getElementById("resultYouWon"),
+  testModeBadge: document.getElementById("testModeBadge")
 };
+
+// Allow URL parameter overrides (e.g., ?test=true, ?testMode=true, or ?reset=true)
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.has("test") || urlParams.has("testMode") || urlParams.has("reset")) {
+  GAME_SETTINGS.testMode = true;
+  if (urlParams.has("reset")) {
+    localStorage.removeItem(STORAGE_KEYS.played);
+    localStorage.removeItem(STORAGE_KEYS.result);
+  }
+}
 
 const wheel = new PrizeWheel(document.getElementById("wheelCanvas"), PRIZES);
 let spinning = false;
@@ -53,6 +64,7 @@ function weightedPick() {
 }
 
 function saveResult(index) {
+  if (GAME_SETTINGS.testMode) return; // Do not lock out user in test mode
   localStorage.setItem(STORAGE_KEYS.played, "true");
   localStorage.setItem(STORAGE_KEYS.result, String(index));
 }
@@ -107,12 +119,21 @@ async function spin() {
   els.statusText.textContent = "Your result is ready below.";
   openResult(index);
   spinning = false;
+
+  if (GAME_SETTINGS.testMode) {
+    els.spinButton.disabled = false;
+  }
 }
 
 function closeModal() {
   els.modal.classList.add("hidden");
   els.confetti.innerHTML = "";
-  els.statusText.textContent = "Show your result at our stall to claim your reward.";
+  if (GAME_SETTINGS.testMode || !GAME_SETTINGS.allowOneSpinPerDevice) {
+    els.spinButton.disabled = false;
+    els.statusText.textContent = "Test mode active: Tap SPIN NOW to spin again.";
+  } else {
+    els.statusText.textContent = "Show your result at our stall to claim your reward.";
+  }
 }
 
 function resetGame() {
@@ -124,6 +145,13 @@ function resetGame() {
 applyBrand();
 validatePrizes();
 loadSavedResult();
+
+if (GAME_SETTINGS.testMode) {
+  if (els.testModeBadge) els.testModeBadge.classList.remove("hidden");
+  window.resetSpinGame = resetGame;
+  console.info("TEST_MODE enabled. Run resetSpinGame() in console or click spin freely.");
+}
+
 els.spinButton.addEventListener("click", spin);
 els.doneButton.addEventListener("click", closeModal);
 els.modal.addEventListener("click", event => {
@@ -133,8 +161,3 @@ els.modal.addEventListener("click", event => {
 document.addEventListener("keydown", event => {
   if (event.key === "Escape" && !els.modal.classList.contains("hidden")) closeModal();
 });
-
-if (GAME_SETTINGS.testMode) {
-  window.resetSpinGame = resetGame;
-  console.info("TEST_MODE enabled. Run resetSpinGame() in the console to clear localStorage.");
-}

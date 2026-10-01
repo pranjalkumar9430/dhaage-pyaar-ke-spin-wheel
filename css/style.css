@@ -280,6 +280,22 @@ img { max-width: 100%; display: block; }
   text-transform: uppercase;
 }
 
+.test-badge {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 100;
+  background: #c9a84c;
+  color: #332821;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 6px 12px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  letter-spacing: .05em;
+  pointer-events: none;
+}
+
 .hidden { display: none !important; }
 
 /* ---- Footer ---- */

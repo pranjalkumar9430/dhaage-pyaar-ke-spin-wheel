@@ -41,11 +41,11 @@ const GAME_SETTINGS = {
 // ===============================
 const PRIZES = [
   {
-    name: "18% OFF",
+    name: "30% OFF",
     probability: 25,
     winning: true,
     color: "#ddb88a",
-    message: "Show this screen at our stall to claim your 18% discount."
+    message: "Show this screen at our stall to claim your 30% discount."
   },
   {
     name: "20% OFF",
@@ -55,11 +55,11 @@ const PRIZES = [
     message: "Show this screen at our stall to claim your 20% discount."
   },
   {
-    name: "30% OFF",
+    name: "15% OFF",
     probability: 10,
     winning: true,
     color: "#c9a84c",
-    message: "Show this screen at our stall to claim your 30% discount."
+    message: "Show this screen at our stall to claim your 15% discount."
   },
   {
     name: "FREE CROCHET KEYCHAIN",
