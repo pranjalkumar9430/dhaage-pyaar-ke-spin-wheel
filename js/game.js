@@ -17,14 +17,17 @@ const els = {
   testModeBadge: document.getElementById("testModeBadge")
 };
 
-// Allow URL parameter overrides (e.g., ?test=true, ?testMode=true, or ?reset=true)
+// Allow explicit URL parameter overrides (e.g., ?test=true or ?test=false)
 const urlParams = new URLSearchParams(window.location.search);
-if (urlParams.has("test") || urlParams.has("testMode") || urlParams.has("reset")) {
+const testParam = urlParams.get("test") || urlParams.get("testMode");
+if (testParam === "true" || testParam === "1") {
   GAME_SETTINGS.testMode = true;
-  if (urlParams.has("reset")) {
-    localStorage.removeItem(STORAGE_KEYS.played);
-    localStorage.removeItem(STORAGE_KEYS.result);
-  }
+} else if (testParam === "false" || testParam === "0") {
+  GAME_SETTINGS.testMode = false;
+}
+if (urlParams.has("reset")) {
+  localStorage.removeItem(STORAGE_KEYS.played);
+  localStorage.removeItem(STORAGE_KEYS.result);
 }
 
 const wheel = new PrizeWheel(document.getElementById("wheelCanvas"), PRIZES);
@@ -150,6 +153,8 @@ if (GAME_SETTINGS.testMode) {
   if (els.testModeBadge) els.testModeBadge.classList.remove("hidden");
   window.resetSpinGame = resetGame;
   console.info("TEST_MODE enabled. Run resetSpinGame() in console or click spin freely.");
+} else {
+  if (els.testModeBadge) els.testModeBadge.classList.add("hidden");
 }
 
 els.spinButton.addEventListener("click", spin);
