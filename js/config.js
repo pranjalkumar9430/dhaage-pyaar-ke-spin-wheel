@@ -49,17 +49,17 @@ const PRIZES = [
   },
   {
     name: "20% OFF",
-    probability: 20,
+    probability: 10,
     winning: true,
     color: "#c98f78",
     message: "Show this screen at our stall to claim your 20% discount."
   },
   {
-    name: "15% OFF",
-    probability: 10,
+    name: "18% OFF",
+    probability: 25,
     winning: true,
     color: "#c9a84c",
-    message: "Show this screen at our stall to claim your 15% discount."
+    message: "Show this screen at our stall to claim your 18% discount."
   },
   {
     name: "FREE CROCHET KEYCHAIN",
