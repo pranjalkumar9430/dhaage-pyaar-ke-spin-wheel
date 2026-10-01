@@ -1,0 +1,447 @@
+/* ================================================
+   Dhaage Pyaar Ke — Spin & Win
+   Brand: warm cream, dusty rose, terracotta, mustard, teal
+   ================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@400;600;700;800;900&display=swap');
+
+/* ---- Design tokens ---- */
+:root {
+  --primary:    #8b5e4b;
+  --secondary:  #c9956a;
+  --background: #f7f0e6;
+  --accent:     #7a8c6e;
+  --text:       #332821;
+  --cream:      #fffaf3;
+  --mustard:    #c9a84c;
+  --teal:       #6b8f8a;
+  --shadow:     0 18px 50px rgba(51,40,33,.12);
+  --shadow-sm:  0 6px 20px rgba(51,40,33,.09);
+  --radius-xl:  28px;
+  --radius-lg:  20px;
+  --radius-sm:  12px;
+}
+
+/* ---- Reset & base ---- */
+*, *::before, *::after { box-sizing: border-box; }
+html { min-height: 100%; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--background);
+  background-image:
+    radial-gradient(ellipse at 15% 10%, rgba(201,149,106,.14) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 90%, rgba(107,143,138,.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, #fffaf3 0%, var(--background) 60%, #ece1d3 100%);
+  color: var(--text);
+  font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button { font: inherit; cursor: pointer; }
+img { max-width: 100%; display: block; }
+
+/* ---- App shell ---- */
+.app-shell {
+  width: min(100%, 700px);
+  margin: 0 auto;
+  padding: 16px 16px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ---- Brand header ---- */
+.brand-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 4px 16px;
+  border-bottom: 1px solid rgba(139,94,75,.10);
+  margin-bottom: 4px;
+}
+
+.brand-mark {
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--cream);
+  box-shadow: 0 4px 16px rgba(51,40,33,.12), 0 1px 3px rgba(51,40,33,.08);
+  overflow: hidden;
+  font-size: 28px;
+  border: 1.5px solid rgba(139,94,75,.15);
+}
+
+.brand-mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  padding: 0;
+}
+
+.brand-text { flex: 1; min-width: 0; }
+
+.eyebrow {
+  margin: 0;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(15px, 4vw, 20px);
+  letter-spacing: .01em;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tagline {
+  margin: 3px 0 0;
+  font-size: clamp(10px, 2.5vw, 12px);
+  color: var(--text);
+  opacity: .58;
+  letter-spacing: .03em;
+}
+
+/* ---- Hero section ---- */
+.hero {
+  text-align: center;
+  padding: 20px 10px 18px;
+}
+
+.pill {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(122,140,110,.14);
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  border: 1px solid rgba(122,140,110,.22);
+}
+
+.hero h1 {
+  margin: 14px 0 6px;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(34px, 9vw, 52px);
+  line-height: 1.0;
+  letter-spacing: -.02em;
+  color: var(--text);
+}
+
+.hero p {
+  margin: 0 auto;
+  max-width: 420px;
+  font-size: clamp(13px, 3.5vw, 15px);
+  line-height: 1.6;
+  opacity: .68;
+}
+
+/* ---- Game card ---- */
+.game-card {
+  background: rgba(255,250,243,.85);
+  border: 1px solid rgba(139,94,75,.10);
+  border-radius: var(--radius-xl);
+  padding: 20px 14px 22px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* ---- Wheel wrapper ---- */
+.wheel-wrap {
+  position: relative;
+  width: min(100%, 460px);
+  margin: 0 auto;
+  padding-top: 10px;
+}
+
+#wheelCanvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+  touch-action: manipulation;
+}
+
+/* ---- Pointer ---- */
+.pointer {
+  position: absolute;
+  z-index: 3;
+  top: 4px;
+  left: 50%;
+  width: 0;
+  height: 0;
+  transform: translateX(-50%);
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 26px solid var(--primary);
+  filter: drop-shadow(0 3px 3px rgba(51,40,33,.22));
+}
+
+/* ---- Spin button ---- */
+.spin-button {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(80px, 19vw, 102px);
+  height: clamp(80px, 19vw, 102px);
+  border: none;
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 36%, #b07860 0%, var(--primary) 55%, #6e4535 100%);
+  color: #fffaf3;
+  font-weight: 900;
+  font-size: clamp(10px, 2.8vw, 13px);
+  letter-spacing: .08em;
+  box-shadow:
+    0 0 0 5px rgba(255,250,243,.90),
+    0 8px 24px rgba(51,40,33,.26),
+    inset 0 1px 0 rgba(255,255,255,.18);
+  transition: transform .2s ease, filter .2s ease, box-shadow .2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.spin-button::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: linear-gradient(145deg, rgba(255,255,255,.25) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.spin-button:hover:not(:disabled) {
+  transform: translate(-50%, -50%) scale(1.05);
+  filter: brightness(1.06);
+  box-shadow:
+    0 0 0 5px rgba(255,250,243,.90),
+    0 12px 32px rgba(51,40,33,.32),
+    inset 0 1px 0 rgba(255,255,255,.18);
+}
+
+.spin-button:active:not(:disabled) {
+  transform: translate(-50%, -50%) scale(.96);
+}
+
+.spin-button:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+  filter: saturate(.8);
+}
+
+.spin-button:focus-visible {
+  outline: 3px solid var(--secondary);
+  outline-offset: 6px;
+}
+
+/* ---- Status text ---- */
+.status {
+  text-align: center;
+  margin: 14px 6px 0;
+  min-height: 22px;
+  font-size: 13px;
+  opacity: .68;
+  line-height: 1.5;
+}
+
+/* ---- Previous result banner ---- */
+.previous-result {
+  margin-top: 16px;
+  padding: 20px 18px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, rgba(122,140,110,.12), rgba(201,149,106,.10));
+  border: 1px solid rgba(122,140,110,.18);
+  text-align: center;
+}
+
+.previous-result h2 {
+  margin: 6px 0;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(22px, 6vw, 28px);
+  color: var(--primary);
+}
+
+.previous-result p { margin: 5px 0 0; font-size: 13px; opacity: .70; }
+
+/* ---- Utility ---- */
+.small-label {
+  margin: 0;
+  font-size: 10.5px;
+  font-weight: 900;
+  letter-spacing: .16em;
+  opacity: .58;
+  text-transform: uppercase;
+}
+
+.hidden { display: none !important; }
+
+/* ---- Footer ---- */
+footer {
+  text-align: center;
+  padding: 22px 0 0;
+  font-size: 12px;
+  opacity: .52;
+  line-height: 1.6;
+}
+
+/* ---- Result modal ---- */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgba(38,24,18,.52);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.modal-card {
+  position: relative;
+  width: min(100%, 380px);
+  padding: 36px 26px 26px;
+  text-align: center;
+  border-radius: var(--radius-xl);
+  background: var(--cream);
+  box-shadow: 0 28px 80px rgba(0,0,0,.28);
+  overflow: hidden;
+  border: 1px solid rgba(139,94,75,.10);
+}
+
+/* Subtle warm top accent bar */
+.modal-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--mustard), var(--secondary), var(--primary));
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+}
+
+.result-icon {
+  font-size: 46px;
+  margin-bottom: 6px;
+  line-height: 1;
+}
+
+.modal-card .small-label {
+  font-size: 11px;
+  letter-spacing: .18em;
+  opacity: .65;
+}
+
+#resultPrize {
+  margin: 10px 0 14px;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(26px, 8vw, 40px);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--primary);
+}
+
+.modal-card #resultMessage {
+  font-size: 13.5px;
+  line-height: 1.6;
+  opacity: .72;
+  margin: 0 0 4px;
+}
+
+/* ---- Primary button ---- */
+.primary-button {
+  width: 100%;
+  margin-top: 18px;
+  padding: 15px 20px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--primary);
+  color: #fffaf3;
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: .06em;
+  transition: filter .18s ease, transform .14s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.primary-button:hover { filter: brightness(1.08); }
+.primary-button:active { transform: scale(.98); }
+.primary-button:focus-visible { outline: 3px solid var(--secondary); outline-offset: 4px; }
+
+/* ---- Confetti ---- */
+.confetti-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+}
+
+.confetti-piece {
+  position: absolute;
+  top: -14px;
+  width: 7px;
+  height: 12px;
+  background: var(--bg, var(--secondary));
+  border-radius: 2px;
+  animation: confetti-fall var(--d) ease-in var(--delay) forwards;
+}
+
+@keyframes confetti-fall {
+  to {
+    transform: translate3d(var(--x), 420px, 0) rotate(var(--r));
+    opacity: 0;
+  }
+}
+
+
+/* ================================================
+   Responsive
+   ================================================ */
+
+/* Small phones: 320px–374px */
+@media (max-width: 374px) {
+  .app-shell { padding: 12px 12px 24px; }
+  .brand-mark { width: 50px; height: 50px; border-radius: 50%; }
+  .eyebrow { font-size: 14px; }
+  .hero { padding: 16px 6px 14px; }
+  .game-card { padding: 16px 10px 18px; border-radius: 22px; }
+  .spin-button { width: 74px; height: 74px; font-size: 10px; }
+  #resultPrize { font-size: 24px; }
+}
+
+/* Phones: 375px–599px */
+@media (min-width: 375px) and (max-width: 599px) {
+  .app-shell { padding: 14px 14px 28px; }
+}
+
+/* Tablet & up */
+@media (min-width: 600px) {
+  .app-shell { padding-top: 28px; }
+  .game-card { padding: 26px 24px 28px; }
+  .brand-mark { width: 72px; height: 72px; }
+}
+
+/* Desktop */
+@media (min-width: 900px) {
+  .app-shell { padding-top: 36px; }
+}
+
+/* ================================================
+   Reduced motion
+   ================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+

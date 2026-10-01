@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f7f0e6">
+  <meta name="description" content="Dhaage Pyaar Ke — Spin the wheel and discover your handmade crochet surprise.">
+  <title>Spin &amp; Win | Dhaage Pyaar Ke</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="brand-header">
+      <div class="brand-mark" id="brandLogo" aria-hidden="true">🧶</div>
+      <div class="brand-text">
+        <p class="eyebrow" id="brandName">Dhaage Pyaar Ke</p>
+        <p class="tagline" id="brandTagline">Spin. Win. Discover Handmade Love.</p>
+      </div>
+    </header>
+
+    <section class="hero" aria-labelledby="pageTitle">
+      <span class="pill">SCAN &bull; SPIN &bull; GET REWARDED</span>
+      <h1 id="pageTitle">Spin &amp; Win</h1>
+      <p>Spin the wheel and discover your little crochet surprise.</p>
+    </section>
+
+    <section class="game-card" aria-label="Spin and win game">
+      <div class="wheel-wrap">
+        <div class="pointer" aria-hidden="true"></div>
+        <canvas id="wheelCanvas" aria-label="Prize wheel"></canvas>
+        <button id="spinButton" class="spin-button" type="button" aria-label="Spin the prize wheel">SPIN NOW</button>
+      </div>
+      <p id="statusText" class="status" role="status" aria-live="polite">Tap SPIN NOW to play.</p>
+    </section>
+
+    <section id="previousResult" class="previous-result hidden" aria-live="polite">
+      <p class="small-label">YOUR RESULT</p>
+      <h2 id="previousPrize"></h2>
+      <p>Show this screen at our stall to claim your reward.</p>
+    </section>
+
+    <footer>
+      <p>Thank you for supporting handmade crochet &nbsp;🧶</p>
+    </footer>
+  </main>
+
+  <div id="resultModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="resultTitle">
+    <div class="modal-card">
+      <div id="confettiLayer" class="confetti-layer" aria-hidden="true"></div>
+      <div id="resultIcon" class="result-icon">🎉</div>
+      <p class="small-label" id="resultTitle">CONGRATULATIONS!</p>
+      <p class="small-label" style="margin-top:4px;opacity:.40;" id="resultYouWon">YOU WON</p>
+      <h2 id="resultPrize">25% OFF</h2>
+      <p id="resultMessage">Show this screen at our stall to claim your reward.</p>
+      <button id="doneButton" class="primary-button" type="button">DONE</button>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/confetti.js"></script>
+  <script src="js/wheel.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>
