@@ -22,7 +22,7 @@ const BRAND = {
 // ===============================
 const GAME_SETTINGS = {
   allowOneSpinPerDevice: true,
-  testMode: false,
+  testMode: true,
   spinsBeforeStop: 6,
   animationDurationMs: 4800
 };
