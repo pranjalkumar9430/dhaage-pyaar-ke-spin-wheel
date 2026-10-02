@@ -170,19 +170,40 @@ img { max-width: 100%; display: block; }
   touch-action: manipulation;
 }
 
-/* ---- Pointer ---- */
-.pointer {
+/* ---- Crochet Hook Pointer ---- */
+.pointer.crochet-hook {
   position: absolute;
-  z-index: 3;
+  z-index: 5;
+  top: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 32px;
+  height: 44px;
+  filter: drop-shadow(0 4px 6px rgba(51,40,33,.28));
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.pointer.crochet-hook .hook-head {
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(ellipse at 50% 20%, #e6d3c0 0%, #c49a78 40%, #704b36 85%);
+  clip-path: polygon(25% 0%, 75% 0%, 85% 55%, 50% 100%, 15% 55%);
+  border-radius: 4px 4px 50% 50%;
+  box-shadow: inset 0 2px 4px rgba(255,255,255,0.4);
+  position: relative;
+}
+
+.pointer.crochet-hook .hook-thread {
+  position: absolute;
   top: 4px;
   left: 50%;
-  width: 0;
-  height: 0;
   transform: translateX(-50%);
-  border-left: 12px solid transparent;
-  border-right: 12px solid transparent;
-  border-bottom: 26px solid var(--primary);
-  filter: drop-shadow(0 3px 3px rgba(51,40,33,.22));
+  width: 14px;
+  height: 14px;
+  border: 2px solid #fffaf3;
+  border-radius: 50%;
+  opacity: 0.85;
 }
 
 /* ---- Spin button ---- */
@@ -415,7 +436,6 @@ footer {
     transform: translate3d(var(--x), 420px, 0) rotate(var(--r));
     opacity: 0;
   }
-}
 
 
 /* ================================================
@@ -431,24 +451,20 @@ footer {
   .game-card { padding: 16px 10px 18px; border-radius: 22px; }
   .spin-button { width: 74px; height: 74px; font-size: 10px; }
   #resultPrize { font-size: 24px; }
-}
 
 /* Phones: 375px–599px */
 @media (min-width: 375px) and (max-width: 599px) {
   .app-shell { padding: 14px 14px 28px; }
-}
 
 /* Tablet & up */
 @media (min-width: 600px) {
   .app-shell { padding-top: 28px; }
   .game-card { padding: 26px 24px 28px; }
   .brand-mark { width: 72px; height: 72px; }
-}
 
 /* Desktop */
 @media (min-width: 900px) {
   .app-shell { padding-top: 36px; }
-}
 
 /* ================================================
    Reduced motion
@@ -460,5 +476,4 @@ footer {
     transition-duration: .01ms !important;
     scroll-behavior: auto !important;
   }
-}
 

@@ -14,7 +14,8 @@ const els = {
   previousResult: document.getElementById("previousResult"),
   previousPrize: document.getElementById("previousPrize"),
   resultYouWon: document.getElementById("resultYouWon"),
-  testModeBadge: document.getElementById("testModeBadge")
+  testModeBadge: document.getElementById("testModeBadge"),
+  wheelWrap: document.querySelector(".wheel-wrap")
 };
 
 // Allow explicit URL parameter overrides (e.g., ?test=true or ?test=false)

@@ -59,10 +59,16 @@ class PrizeWheel {
       ctx.fillStyle = prize.color;
       ctx.fill();
 
-      // Segment border
+      // Crochet dashed thread border
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.lineTo(Math.cos(start) * radius, Math.sin(start) * radius);
       ctx.lineWidth = 2.5;
-      ctx.strokeStyle = "rgba(255,250,243,0.55)";
+      ctx.setLineDash([4, 4]);
+      ctx.strokeStyle = "rgba(255,250,243,0.85)";
       ctx.stroke();
+      ctx.restore();
 
       // Text rendering
       ctx.save();
@@ -96,22 +102,33 @@ class PrizeWheel {
       ctx.restore();
     });
 
-    // Outer rim
+    // Outer rim solid border
     ctx.beginPath();
     ctx.arc(0, 0, radius, 0, Math.PI * 2);
-    ctx.lineWidth = 8;
+    ctx.lineWidth = 7;
     ctx.strokeStyle = "#fffaf3";
     ctx.shadowColor = "rgba(51,40,33,0.14)";
     ctx.shadowBlur = 8;
     ctx.stroke();
 
-    // Inner decorative ring
-    ctx.beginPath();
-    ctx.arc(0, 0, radius, 0, Math.PI * 2);
-    ctx.lineWidth = 1.5;
-    ctx.strokeStyle = "rgba(139,94,75,0.22)";
-    ctx.shadowBlur = 0;
-    ctx.stroke();
+    // Scalloped crochet lace rim
+    const scallops = 42;
+    const scallopRadius = (Math.PI * 2 * radius) / scallops / 2.2;
+    ctx.save();
+    ctx.fillStyle = "#fffaf3";
+    ctx.shadowColor = "rgba(51,40,33,0.12)";
+    ctx.shadowBlur = 4;
+    for (let s = 0; s < scallops; s++) {
+      const angle = (s / scallops) * Math.PI * 2;
+      const sx = Math.cos(angle) * (radius - 2);
+      const sy = Math.sin(angle) * (radius - 2);
+      ctx.beginPath();
+      ctx.arc(sx, sy, scallopRadius, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.restore();
+
+
 
     ctx.restore();
   }
