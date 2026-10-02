@@ -56,14 +56,39 @@ function validatePrizes() {
   }
 }
 
-function weightedPick() {
-  const total = PRIZES.reduce((sum, prize) => sum + Math.max(0, prize.probability), 0);
-  let random = Math.random() * total;
-  for (let i = 0; i < PRIZES.length; i++) {
-    random -= Math.max(0, PRIZES[i].probability);
-    if (random < 0) return i;
+// -------------------------------------------------------
+// Deterministic prize picker based on spin count
+// Rule 1: Every 10th spin  → Free Gift (random among gift prizes)
+// Rule 2: Every 5th spin   → 20% OFF
+// Rule 3: All other spins  → 18% OFF
+// -------------------------------------------------------
+const FREE_GIFT_NAMES = ["FREE CROCHET KEYCHAIN", "FREE CROCHET FLOWER", "FREE MINI GIFT"];
+
+function getSpinCount() {
+  return parseInt(localStorage.getItem(STORAGE_KEYS.spinCount) || "0", 10);
+}
+
+function incrementSpinCount() {
+  const next = getSpinCount() + 1;
+  localStorage.setItem(STORAGE_KEYS.spinCount, String(next));
+  return next;
+}
+
+function determinePrizeIndex(spinNumber) {
+  // Every 10th spin → random free gift
+  if (spinNumber % 10 === 0) {
+    const giftIndices = FREE_GIFT_NAMES
+      .map(name => PRIZE_INDEX[name])
+      .filter(i => i !== undefined);
+    const pick = giftIndices[Math.floor(Math.random() * giftIndices.length)];
+    return pick;
   }
-  return PRIZES.length - 1;
+  // Every 5th spin → 20% OFF
+  if (spinNumber % 5 === 0) {
+    return PRIZE_INDEX["20% OFF"];
+  }
+  // All other spins → 18% OFF
+  return PRIZE_INDEX["18% OFF"];
 }
 
 function saveResult(index) {
@@ -114,8 +139,16 @@ async function spin() {
   spinning = true;
   els.spinButton.disabled = true;
   els.statusText.textContent = "Good luck! The wheel is spinning…";
-  const index = weightedPick();
+
+  // Determine prize deterministically
+  const nextSpinNumber = getSpinCount() + 1;
+  const index = determinePrizeIndex(nextSpinNumber);
+
   await wheel.spinTo(index);
+
+  // Persist spin count only after successful spin
+  incrementSpinCount();
+
   saveResult(index);
   els.previousResult.classList.remove("hidden");
   els.previousPrize.textContent = PRIZES[index].name;
@@ -142,6 +175,7 @@ function closeModal() {
 function resetGame() {
   localStorage.removeItem(STORAGE_KEYS.played);
   localStorage.removeItem(STORAGE_KEYS.result);
+  localStorage.removeItem(STORAGE_KEYS.spinCount);
   window.location.reload();
 }
 

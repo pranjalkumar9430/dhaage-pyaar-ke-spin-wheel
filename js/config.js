@@ -41,22 +41,15 @@ const GAME_SETTINGS = {
 // ===============================
 const PRIZES = [
   {
-    name: "30% OFF",
-    probability: 25,
-    winning: true,
-    color: "#ddb88a",
-    message: "Show this screen at our stall to claim your 30% discount."
-  },
-  {
     name: "20% OFF",
-    probability: 10,
+    probability: 15,
     winning: true,
     color: "#c98f78",
     message: "Show this screen at our stall to claim your 20% discount."
   },
   {
     name: "18% OFF",
-    probability: 25,
+    probability: 35,
     winning: true,
     color: "#c9a84c",
     message: "Show this screen at our stall to claim your 18% discount."
@@ -70,31 +63,36 @@ const PRIZES = [
   },
   {
     name: "FREE CROCHET FLOWER",
-    probability: 10,
+    probability: 15,
     winning: true,
     color: "#e8c4b0",
     message: "Show this screen at our stall to claim your free crochet flower."
   },
   {
     name: "FREE MINI GIFT",
-    probability: 5,
+    probability: 10,
     winning: true,
     color: "#6b8f8a",
     message: "Show this screen at our stall to claim your free mini gift."
   },
   {
     name: "BETTER LUCK NEXT TIME",
-    probability: 15,
+    probability: 10,
     winning: false,
     color: "#ddd4c7",
     message: "Visit our stall and explore our handmade crochet collection."
   }
 ];
 
+// Prize name → index lookup helper (used by deterministic spin logic)
+const PRIZE_INDEX = {};
+PRIZES.forEach((p, i) => { PRIZE_INDEX[p.name] = i; });
+
 // ===============================
 // STORAGE KEYS (do not change unless intentionally resetting all users)
 // ===============================
 const STORAGE_KEYS = {
   played: "crochetSpinPlayed",
-  result: "crochetSpinResult"
+  result: "crochetSpinResult",
+  spinCount: "crochetSpinCount"
 };
