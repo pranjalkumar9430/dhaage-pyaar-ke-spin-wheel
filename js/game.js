@@ -62,7 +62,7 @@ function validatePrizes() {
 // Rule 2: Every 5th spin   → 20% OFF
 // Rule 3: All other spins  → 18% OFF
 // -------------------------------------------------------
-const FREE_GIFT_NAMES = ["FREE CROCHET KEYCHAIN", "FREE CROCHET FLOWER", "FREE MINI GIFT"];
+const FREE_GIFT_NAMES = ["FREE GIFT"];
 
 function getSpinCount() {
   return parseInt(localStorage.getItem(STORAGE_KEYS.spinCount) || "0", 10);

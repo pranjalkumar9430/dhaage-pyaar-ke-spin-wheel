@@ -41,6 +41,13 @@ const GAME_SETTINGS = {
 // ===============================
 const PRIZES = [
   {
+    name: "30% OFF",
+    probability: 0,        // visually on wheel but NEVER lands here
+    winning: true,
+    color: "#ddb88a",
+    message: "Show this screen at our stall to claim your 30% discount."
+  },
+  {
     name: "20% OFF",
     probability: 15,
     winning: true,
@@ -55,29 +62,15 @@ const PRIZES = [
     message: "Show this screen at our stall to claim your 18% discount."
   },
   {
-    name: "FREE CROCHET KEYCHAIN",
+    name: "FREE GIFT",
     probability: 15,
     winning: true,
     color: "#a9bba8",
-    message: "Show this screen at our stall to claim your free crochet keychain."
-  },
-  {
-    name: "FREE CROCHET FLOWER",
-    probability: 15,
-    winning: true,
-    color: "#e8c4b0",
-    message: "Show this screen at our stall to claim your free crochet flower."
-  },
-  {
-    name: "FREE MINI GIFT",
-    probability: 10,
-    winning: true,
-    color: "#6b8f8a",
-    message: "Show this screen at our stall to claim your free mini gift."
+    message: "Show this screen at our stall to claim your free gift."
   },
   {
     name: "BETTER LUCK NEXT TIME",
-    probability: 10,
+    probability: 0,        // visually on wheel but NEVER lands here
     winning: false,
     color: "#ddd4c7",
     message: "Visit our stall and explore our handmade crochet collection."
